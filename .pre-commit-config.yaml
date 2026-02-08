@@ -1,0 +1,4 @@
+# Minimal pre-commit configuration.
+# This repo has a pre-commit git hook installed, and it requires this file to exist.
+# We keep it empty on purpose (no hooks enforced) so commits are not blocked.
+repos: []
