@@ -1,7 +1,0 @@
-,Logistic Regression,Random Forest,Gradient Boosting
-Accuracy,0.7114,0.767,0.7768
-Balanced Acc,0.7051,0.7339,0.7345
-F1-Score,0.7607,0.8231,0.835
-ROC-AUC,0.7789,0.8096,0.813
-CV F1 (mean),0.7676,0.8234,0.8302
-CV F1 (std),0.0105,0.01,0.0049
