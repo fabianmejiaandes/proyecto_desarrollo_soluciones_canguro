@@ -1,0 +1,7 @@
+,Gradient Boosting
+Accuracy,0.7727
+Balanced Acc,0.7281
+F1-Score,0.8329
+ROC-AUC,0.8141
+CV F1 (mean),0.8291
+CV F1 (std),0.0057

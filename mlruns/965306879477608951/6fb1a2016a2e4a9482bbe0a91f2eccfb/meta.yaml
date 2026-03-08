@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/lfabi/OneDrive/Documents/developer/uniandes/desarrollo_proyectos/proyecto_desarrollo_soluciones_canguro/mlruns/965306879477608951/6fb1a2016a2e4a9482bbe0a91f2eccfb/artifacts
+end_time: 1773001003405
+entry_point_name: ''
+experiment_id: '965306879477608951'
+lifecycle_stage: active
+run_id: 6fb1a2016a2e4a9482bbe0a91f2eccfb
+run_name: Gradient Boosting
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1773000968674
+status: 3
+tags: []
+user_id: lfabi

@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Users/lfabi/OneDrive/Documents/developer/uniandes/desarrollo_proyectos/proyecto_desarrollo_soluciones_canguro/mlruns/965306879477608951/models/m-43f1203b7be44d0cb9987f275424a512/artifacts
+creation_timestamp: 1773001000432
+experiment_id: '965306879477608951'
+last_updated_timestamp: 1773001003356
+model_id: m-43f1203b7be44d0cb9987f275424a512
+model_type: null
+name: model_gradient_boosting
+source_run_id: 6fb1a2016a2e4a9482bbe0a91f2eccfb
+status: 2
+status_message: null

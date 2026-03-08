@@ -1,0 +1,164 @@
+artifact_path: file:///C:/Users/lfabi/OneDrive/Documents/developer/uniandes/desarrollo_proyectos/proyecto_desarrollo_soluciones_canguro/mlruns/965306879477608951/models/m-43f1203b7be44d0cb9987f275424a512/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.11.9
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.8.0
+    skops_trusted_types: null
+is_signature_from_type_hint: false
+mlflow_version: 3.9.0
+model_id: m-43f1203b7be44d0cb9987f275424a512
+model_size_bytes: 739947
+model_uuid: m-43f1203b7be44d0cb9987f275424a512
+prompts: null
+run_id: 6fb1a2016a2e4a9482bbe0a91f2eccfb
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "double", "name": "periodosanalisis", "required": true}, {"type":
+    "double", "name": "Sistemadeaseguramiento", "required": true}, {"type": "double",
+    "name": "Iden_embarazoMultiple", "required": true}, {"type": "double", "name":
+    "CSP_SituaPareja", "required": true}, {"type": "double", "name": "CSP_EscolaridadMadre",
+    "required": true}, {"type": "double", "name": "CSP_SituacionLaboralMadre", "required":
+    true}, {"type": "double", "name": "CSP_EscolaridadPadre", "required": true}, {"type":
+    "double", "name": "CSP_SituacionLaboralPadre", "required": true}, {"type": "double",
+    "name": "CSP_IngresoMensual", "required": true}, {"type": "double", "name": "CSP_DistanciaVivienda",
+    "required": true}, {"type": "double", "name": "CSP_numPersVivenIngMen", "required":
+    true}, {"type": "double", "name": "CSP_Menores5vivenMadre", "required": true},
+    {"type": "double", "name": "CSP_NutricionFam", "required": true}, {"type": "double",
+    "name": "CSP_EmbarazoDeseado", "required": true}, {"type": "double", "name": "CSP_AyudaPerm1mes",
+    "required": true}, {"type": "double", "name": "CP_PesoMadre", "required": true},
+    {"type": "double", "name": "CP_TallaMadre", "required": true}, {"type": "double",
+    "name": "BMImadre", "required": true}, {"type": "double", "name": "BMImadrecat",
+    "required": true}, {"type": "double", "name": "CP_PesoPadre", "required": true},
+    {"type": "double", "name": "CP_TallaPadre", "required": true}, {"type": "double",
+    "name": "BMIpadre", "required": true}, {"type": "double", "name": "BMIpadrecat",
+    "required": true}, {"type": "double", "name": "CP_TotalCPN", "required": true},
+    {"type": "double", "name": "CP_Hormonales", "required": true}, {"type": "double",
+    "name": "CP_DIU", "required": true}, {"type": "double", "name": "CP_MesInicCP",
+    "required": true}, {"type": "double", "name": "CP_SA_Sangrado", "required": true},
+    {"type": "double", "name": "CP_SA_InfUrinaria", "required": true}, {"type": "double",
+    "name": "CP_SA_InfGineco", "required": true}, {"type": "double", "name": "CP_SA_Anemia",
+    "required": true}, {"type": "double", "name": "CP_SA_EnfRespiratoria", "required":
+    true}, {"type": "double", "name": "CP_SA_RPM", "required": true}, {"type": "double",
+    "name": "CP_SA_APP", "required": true}, {"type": "double", "name": "CP_SA_Preclampsia",
+    "required": true}, {"type": "double", "name": "CP_EstuvoHosp", "required": true},
+    {"type": "double", "name": "CP_MadreAlcohol", "required": true}, {"type": "double",
+    "name": "CP_MadreFumo", "required": true}, {"type": "double", "name": "CP_TP_Orina",
+    "required": true}, {"type": "double", "name": "CP_TP_Rubeola", "required": true},
+    {"type": "double", "name": "CP_TP_Toxoplasmosis", "required": true}, {"type":
+    "double", "name": "CP_TP_Sifilis", "required": true}, {"type": "double", "name":
+    "CP_TP_HIV", "required": true}, {"type": "double", "name": "CP_TP_HepatitisB",
+    "required": true}, {"type": "double", "name": "CP_NumEcografias", "required":
+    true}, {"type": "double", "name": "CP_edadmaterna", "required": true}, {"type":
+    "double", "name": "PA_LugarNacimiento", "required": true}, {"type": "double",
+    "name": "PA_AtendioParto", "required": true}, {"type": "double", "name": "PA_TipoParto",
+    "required": true}, {"type": "double", "name": "PA_SufrimientoFetalAgudo", "required":
+    true}, {"type": "double", "name": "PA_LiqAmnioticoMeconiado", "required": true},
+    {"type": "double", "name": "PA_RitmoCardiaco", "required": true}, {"type": "double",
+    "name": "PA_Monitoreo", "required": true}, {"type": "double", "name": "PA_ComplicacionsPartoPlacentaPrevia",
+    "required": true}, {"type": "double", "name": "PA_ComplicacionsPartoMultiples",
+    "required": true}, {"type": "double", "name": "PA_EstActualMadre", "required":
+    true}, {"type": "double", "name": "ERN_AdaptNeonatal", "required": true}, {"type":
+    "double", "name": "ERN_Peso", "required": true}, {"type": "double", "name": "ERN_Talla0",
+    "required": true}, {"type": "double", "name": "ERN_Sexo", "required": true}, {"type":
+    "double", "name": "ERN_PC", "required": true}, {"type": "double", "name": "RCIUpeso",
+    "required": true}, {"type": "double", "name": "RCIUtalla", "required": true},
+    {"type": "double", "name": "RCIUpesoytallanacer", "required": true}, {"type":
+    "double", "name": "RCIUPC", "required": true}, {"type": "double", "name": "pesotalla0",
+    "required": true}, {"type": "double", "name": "ERN_Ballard", "required": true},
+    {"type": "double", "name": "zscorepesotalla0", "required": true}, {"type": "double",
+    "name": "zscorepesotalla0cat", "required": true}, {"type": "double", "name": "zscorepeso0",
+    "required": true}, {"type": "double", "name": "zscorepeso0cat", "required": true},
+    {"type": "double", "name": "zscoretalla0", "required": true}, {"type": "double",
+    "name": "zscoretalla0cat", "required": true}, {"type": "double", "name": "zscorePC0",
+    "required": true}, {"type": "double", "name": "zscorePC0cat", "required": true},
+    {"type": "double", "name": "ERN_LubchencoFenton", "required": true}, {"type":
+    "double", "name": "ERN_A_1min", "required": true}, {"type": "double", "name":
+    "ERN_A_5min", "required": true}, {"type": "double", "name": "ERN_A_10min", "required":
+    true}, {"type": "double", "name": "HD_DiasVenMecanica", "required": true}, {"type":
+    "double", "name": "HD_DiasVenNoInvasiva", "required": true}, {"type": "double",
+    "name": "HD_DiasOxigeno", "required": true}, {"type": "double", "name": "HD_DiasFototerapia",
+    "required": true}, {"type": "double", "name": "HD_DiasAlimentacionPar", "required":
+    true}, {"type": "double", "name": "HD_DiasUCI", "required": true}, {"type": "double",
+    "name": "HD_DiasURN", "required": true}, {"type": "double", "name": "HD_DiasAlojamiento",
+    "required": true}, {"type": "double", "name": "HD_TotalDiasHospital", "required":
+    true}, {"type": "double", "name": "HD_ExamenesEcografiacerebral", "required":
+    true}, {"type": "double", "name": "HD_ExamenesEcocardiograma", "required": true},
+    {"type": "double", "name": "HD_DosisSurfactante", "required": true}, {"type":
+    "double", "name": "HD_CicloAntibio", "required": true}, {"type": "double", "name":
+    "HD_CiclosUltimaLinea", "required": true}, {"type": "double", "name": "HD_NumTrasSanguineas",
+    "required": true}, {"type": "double", "name": "HD_C_HemorragiaIntra", "required":
+    true}, {"type": "double", "name": "HD_C_Hipoglicemia", "required": true}, {"type":
+    "double", "name": "HD_C_Apnea", "required": true}, {"type": "double", "name":
+    "HD_C_Ictericia", "required": true}, {"type": "double", "name": "HD_C_ExamenNeurologico",
+    "required": true}, {"type": "double", "name": "HD_C_Convulsiones", "required":
+    true}, {"type": "double", "name": "HD_C_DisplasiaBronco", "required": true}, {"type":
+    "double", "name": "HD_C_OxigenoDependencia", "required": true}, {"type": "double",
+    "name": "HD_PesoSalida", "required": true}, {"type": "double", "name": "HD_TipoAlimentacionS",
+    "required": true}, {"type": "double", "name": "ANOCAT", "required": true}, {"type":
+    "double", "name": "ERN_sepsis", "required": true}, {"type": "double", "name":
+    "Sufrimientofetalcronico", "required": true}, {"type": "double", "name": "tuvotransfusiones",
+    "required": true}, {"type": "double", "name": "edadmatcat", "required": true},
+    {"type": "double", "name": "ecocat", "required": true}, {"type": "double", "name":
+    "apgarcat1", "required": true}, {"type": "double", "name": "apgarcat5", "required":
+    true}, {"type": "double", "name": "ninosmenosde5anos", "required": true}, {"type":
+    "double", "name": "UCI", "required": true}, {"type": "double", "name": "ALIMENTAPARENTERAL",
+    "required": true}, {"type": "double", "name": "INFECCIONOSOCOMIAL", "required":
+    true}, {"type": "double", "name": "BPN", "required": true}, {"type": "double",
+    "name": "PESO1500G", "required": true}, {"type": "double", "name": "V195B", "required":
+    true}, {"type": "double", "name": "Nearterm", "required": true}, {"type": "double",
+    "name": "controlcat", "required": true}, {"type": "double", "name": "pdpcat",
+    "required": true}, {"type": "double", "name": "primipara", "required": true},
+    {"type": "double", "name": "trimestre", "required": true}, {"type": "double",
+    "name": "recibioantibioticos", "required": true}, {"type": "double", "name": "anoxia5mn",
+    "required": true}, {"type": "double", "name": "problemaneurologico", "required":
+    true}, {"type": "double", "name": "menosde31sem", "required": true}, {"type":
+    "double", "name": "menosde1001", "required": true}, {"type": "double", "name":
+    "tipoventilacion", "required": true}, {"type": "double", "name": "ventilacionsola",
+    "required": true}, {"type": "double", "name": "cpapsola", "required": true}, {"type":
+    "double", "name": "ventilacionmixta", "required": true}, {"type": "double", "name":
+    "UCIsinsoporteventilatorio", "required": true}, {"type": "double", "name": "surfactante",
+    "required": true}, {"type": "double", "name": "V196D", "required": true}, {"type":
+    "double", "name": "V196B", "required": true}, {"type": "double", "name": "V196C",
+    "required": true}, {"type": "double", "name": "EGEnt", "required": true}, {"type":
+    "double", "name": "EG1", "required": true}, {"type": "double", "name": "BMI1",
+    "required": true}, {"type": "double", "name": "zscoreBMI1", "required": true},
+    {"type": "double", "name": "zscorepesotalla1cat", "required": true}, {"type":
+    "double", "name": "zscorepeso1", "required": true}, {"type": "double", "name":
+    "zscorepeso1cat", "required": true}, {"type": "double", "name": "zscoretalla1",
+    "required": true}, {"type": "double", "name": "zscoretalla1cat", "required": true},
+    {"type": "double", "name": "zscorePC1", "required": true}, {"type": "double",
+    "name": "zscorePC1cat", "required": true}, {"type": "double", "name": "V199",
+    "required": true}, {"type": "double", "name": "V200", "required": true}, {"type":
+    "double", "name": "V201", "required": true}, {"type": "double", "name": "V202",
+    "required": true}, {"type": "double", "name": "V204A", "required": true}, {"type":
+    "double", "name": "V205", "required": true}, {"type": "double", "name": "V206",
+    "required": true}, {"type": "double", "name": "V207", "required": true}, {"type":
+    "double", "name": "V208", "required": true}, {"type": "double", "name": "V209",
+    "required": true}, {"type": "double", "name": "pesentcat", "required": true},
+    {"type": "double", "name": "gesentcat", "required": true}, {"type": "double",
+    "name": "indicadorHICentrada", "required": true}, {"type": "double", "name": "hospenURN",
+    "required": true}, {"type": "double", "name": "ecocerebral", "required": true},
+    {"type": "double", "name": "percapindicfinal", "required": true}, {"type": "double",
+    "name": "RCEUFentonentrada", "required": true}, {"type": "double", "name": "embbajoplanificacion",
+    "required": true}, {"type": "double", "name": "gananciapesonacerpesoentradaPMC",
+    "required": true}, {"type": "double", "name": "gananciapesonacerpesoentradaPMChosp",
+    "required": true}, {"type": "double", "name": "gananciatallanacertallaentradaPMC",
+    "required": true}, {"type": "double", "name": "primariamadre", "required": true}]'
+  outputs: '[{"type": "long", "required": true}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-03-08 20:16:40.468066'

@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/lfabi/OneDrive/Documents/developer/uniandes/desarrollo_proyectos/proyecto_desarrollo_soluciones_canguro/mlruns/965306879477608951/4c1f27d6869a41c6870231c55d7046fb/artifacts
+end_time: 1773001005033
+entry_point_name: ''
+experiment_id: '965306879477608951'
+lifecycle_stage: active
+run_id: 4c1f27d6869a41c6870231c55d7046fb
+run_name: malnutricion_pipeline
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1773000968641
+status: 3
+tags: []
+user_id: lfabi
