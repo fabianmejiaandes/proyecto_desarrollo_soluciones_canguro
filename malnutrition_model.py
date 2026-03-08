@@ -52,6 +52,9 @@ from sklearn.metrics import (
     balanced_accuracy_score,
 )
 
+import joblib
+import json
+
 import mlflow
 import mlflow.sklearn
 
@@ -244,6 +247,14 @@ Ejemplos:
     out.add_argument('--output-dir', type=str, default=None, help='Directorio de salida (default: output/)')
     out.add_argument('--no-dashboard', action='store_true', help='Omitir generación del Excel dashboard')
     out.add_argument('--no-plots', action='store_true', help='Omitir generación de gráficos EDA/resultados')
+    out.add_argument(
+        '--export-model', action='store_true',
+        help='Exportar el mejor modelo empaquetado (modelo + pipeline) para uso en API',
+    )
+    out.add_argument(
+        '--export-dir', type=str, default=None,
+        help='Directorio para exportar el modelo empaquetado (default: output/model_package/)',
+    )
 
     return parser.parse_args(argv)
 
@@ -368,7 +379,16 @@ def preprocess(df_raw, feature_cols, dict_df, missing_threshold=0.70):
     X = X.drop(columns=zero_var_cols)
 
     logger.info(f"Dimensiones después de limpieza: {X.shape}")
-    return X, y
+
+    preprocessing_state = {
+        'missing_map': missing_map,
+        'high_missing_cols': high_missing,
+        'zero_var_cols': zero_var_cols,
+        'date_cols': date_cols,
+        'final_columns': X.columns.tolist(),
+    }
+
+    return X, y, preprocessing_state
 
 
 # ============================================================================
@@ -480,6 +500,7 @@ def feature_engineering(X, correlation_threshold=0.95):
 
     # Imputación con mediana
     imputer = SimpleImputer(strategy='median')
+    imputer_feature_names = X.columns.tolist()
     X = pd.DataFrame(imputer.fit_transform(X), columns=X.columns, index=X.index)
 
     # Eliminar features con alta colinealidad
@@ -490,7 +511,17 @@ def feature_engineering(X, correlation_threshold=0.95):
     X = X.drop(columns=high_corr_features)
 
     logger.info(f"Dimensiones finales: {X.shape}")
-    return X
+
+    engineering_state = {
+        'cat_to_onehot': cat_to_onehot,
+        'cat_to_drop': cat_to_drop,
+        'imputer': imputer,
+        'imputer_feature_names': imputer_feature_names,
+        'high_corr_features': high_corr_features,
+        'final_feature_names': X.columns.tolist(),
+    }
+
+    return X, engineering_state
 
 
 # ============================================================================
@@ -1050,6 +1081,89 @@ def generate_dashboard(df_raw, results, X_train, output_dir, data_path):
 
 
 # ============================================================================
+# EMPAQUETAMIENTO DEL MODELO
+# ============================================================================
+def export_model_package(
+    model,
+    model_name,
+    feature_cols,
+    preprocessing_state,
+    engineering_state,
+    metrics,
+    args,
+    export_dir,
+):
+    """Exporta el modelo entrenado junto con todo el pipeline de preprocesamiento
+    como un paquete reutilizable para producción / API."""
+
+    export_dir = Path(export_dir)
+    export_dir.mkdir(exist_ok=True, parents=True)
+
+    # 1. Guardar modelo entrenado
+    joblib.dump(model, export_dir / 'model.joblib')
+    logger.info(f"Modelo guardado: {export_dir / 'model.joblib'}")
+
+    # 2. Guardar imputer ajustado
+    joblib.dump(engineering_state['imputer'], export_dir / 'imputer.joblib')
+    logger.info(f"Imputer guardado: {export_dir / 'imputer.joblib'}")
+
+    # 3. Guardar metadatos del pipeline
+    pipeline_metadata = {
+        'model_name': model_name,
+        'target': TARGET,
+        'target_labels': {
+            '0': 'Malnutrición / Crecimiento NO armónico',
+            '1': 'Crecimiento armónico (adecuado)',
+        },
+        'feature_cols_input': feature_cols,
+        'id_cols_excluded': ID_COLS,
+        'outcome_cols_excluded': OUTCOME_COLS[:10],
+        'preprocessing': {
+            'missing_map': {k: v for k, v in preprocessing_state['missing_map'].items()},
+            'high_missing_cols': preprocessing_state['high_missing_cols'],
+            'zero_var_cols': preprocessing_state['zero_var_cols'],
+            'date_cols': preprocessing_state['date_cols'],
+        },
+        'feature_engineering': {
+            'cat_to_onehot': engineering_state['cat_to_onehot'],
+            'cat_to_drop': engineering_state['cat_to_drop'],
+            'imputer_feature_names': engineering_state['imputer_feature_names'],
+            'high_corr_features': engineering_state['high_corr_features'],
+            'final_feature_names': engineering_state['final_feature_names'],
+        },
+        'metrics': metrics,
+        'hyperparameters': {
+            'n_estimators': args.gb_n_estimators,
+            'max_depth': args.gb_max_depth,
+            'learning_rate': args.gb_learning_rate,
+            'subsample': args.gb_subsample,
+            'min_samples_split': args.gb_min_samples_split,
+            'min_samples_leaf': args.gb_min_samples_leaf,
+        },
+        'training_params': {
+            'nrows': args.nrows,
+            'test_size': args.test_size,
+            'cv_folds': args.cv_folds,
+            'random_state': args.random_state,
+            'missing_threshold': args.missing_threshold,
+            'correlation_threshold': args.correlation_threshold,
+        },
+    }
+
+    with open(export_dir / 'pipeline_metadata.json', 'w', encoding='utf-8') as f:
+        json.dump(pipeline_metadata, f, indent=2, ensure_ascii=False, default=str)
+    logger.info(f"Metadata guardada: {export_dir / 'pipeline_metadata.json'}")
+
+    # 4. Guardar lista de features finales (orden exacto)
+    with open(export_dir / 'feature_names.json', 'w', encoding='utf-8') as f:
+        json.dump(engineering_state['final_feature_names'], f, indent=2)
+    logger.info(f"Feature names guardados: {export_dir / 'feature_names.json'}")
+
+    logger.info(f"Modelo empaquetado exitosamente en: {export_dir}")
+    return export_dir
+
+
+# ============================================================================
 # MAIN
 # ============================================================================
 def main(argv=None):
@@ -1079,12 +1193,12 @@ def main(argv=None):
     # --- Carga y preprocesamiento ---
     df_raw, dict_df = load_data(data_path, dict_path, args.nrows)
     feature_cols = select_features(df_raw)
-    X, y = preprocess(df_raw, feature_cols, dict_df, missing_threshold=args.missing_threshold)
+    X, y, preprocessing_state = preprocess(df_raw, feature_cols, dict_df, missing_threshold=args.missing_threshold)
 
     if not args.no_plots:
         run_eda(X, y, output_dir)
 
-    X = feature_engineering(X, correlation_threshold=args.correlation_threshold)
+    X, engineering_state = feature_engineering(X, correlation_threshold=args.correlation_threshold)
 
     # --- Train/Test Split ---
     X_train, X_test, y_train, y_test = train_test_split(
@@ -1201,6 +1315,29 @@ def main(argv=None):
         if not args.no_dashboard:
             excel_path = generate_dashboard(df_raw, results, X_train, output_dir, data_path)
             mlflow.log_artifact(str(excel_path))
+
+        # --- Exportar modelo empaquetado ---
+        if args.export_model:
+            export_dir = Path(args.export_dir) if args.export_dir else output_dir / 'model_package'
+            best_model_obj = results[best_name]['model']
+            best_metrics = {
+                'accuracy': results[best_name]['accuracy'],
+                'balanced_accuracy': results[best_name]['balanced_accuracy'],
+                'f1_score': results[best_name]['f1_score'],
+                'roc_auc': results[best_name]['roc_auc'],
+                'cv_f1_mean': results[best_name]['cv_f1_mean'],
+                'cv_f1_std': results[best_name]['cv_f1_std'],
+            }
+            export_model_package(
+                model=best_model_obj,
+                model_name=best_name,
+                feature_cols=feature_cols,
+                preprocessing_state=preprocessing_state,
+                engineering_state=engineering_state,
+                metrics=best_metrics,
+                args=args,
+                export_dir=export_dir,
+            )
 
     # --- Resumen final ---
     logger.info("=" * 80)
