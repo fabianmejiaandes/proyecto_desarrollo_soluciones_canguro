@@ -1,0 +1,191 @@
+[
+  {
+    "outcome": "Stunting",
+    "fase": "F0_Prenatal_Parto",
+    "AUC_test": 0.6389,
+    "Sens_test": 0.5403,
+    "Spec_test": 0.6462,
+    "n_test": 6191,
+    "n_pos_test": 1525
+  },
+  {
+    "outcome": "Stunting",
+    "fase": "F1_Nacimiento",
+    "AUC_test": 0.7238,
+    "Sens_test": 0.6203,
+    "Spec_test": 0.6914,
+    "n_test": 6191,
+    "n_pos_test": 1525
+  },
+  {
+    "outcome": "Stunting",
+    "fase": "F2_Hospitalizacion",
+    "AUC_test": 0.7251,
+    "Sens_test": 0.6262,
+    "Spec_test": 0.6937,
+    "n_test": 6191,
+    "n_pos_test": 1525
+  },
+  {
+    "outcome": "Stunting",
+    "fase": "F3_40semanas",
+    "AUC_test": 0.7577,
+    "Sens_test": 0.6275,
+    "Spec_test": 0.7514,
+    "n_test": 6191,
+    "n_pos_test": 1525
+  },
+  {
+    "outcome": "Stunting",
+    "fase": "F4_3meses",
+    "AUC_test": 0.8079,
+    "Sens_test": 0.68,
+    "Spec_test": 0.7718,
+    "n_test": 6191,
+    "n_pos_test": 1525
+  },
+  {
+    "outcome": "Stunting",
+    "fase": "F5_6meses",
+    "AUC_test": 0.8858,
+    "Sens_test": 0.7803,
+    "Spec_test": 0.8148,
+    "n_test": 6191,
+    "n_pos_test": 1525
+  },
+  {
+    "outcome": "Stunting",
+    "fase": "F6_9meses",
+    "AUC_test": 0.9229,
+    "Sens_test": 0.8177,
+    "Spec_test": 0.8478,
+    "n_test": 6191,
+    "n_pos_test": 1525
+  },
+  {
+    "outcome": "Bajo_peso",
+    "fase": "F0_Prenatal_Parto",
+    "AUC_test": 0.6086,
+    "Sens_test": 0.4043,
+    "Spec_test": 0.7418,
+    "n_test": 5951,
+    "n_pos_test": 700
+  },
+  {
+    "outcome": "Bajo_peso",
+    "fase": "F1_Nacimiento",
+    "AUC_test": 0.739,
+    "Sens_test": 0.5543,
+    "Spec_test": 0.768,
+    "n_test": 5951,
+    "n_pos_test": 700
+  },
+  {
+    "outcome": "Bajo_peso",
+    "fase": "F2_Hospitalizacion",
+    "AUC_test": 0.739,
+    "Sens_test": 0.5386,
+    "Spec_test": 0.7863,
+    "n_test": 5951,
+    "n_pos_test": 700
+  },
+  {
+    "outcome": "Bajo_peso",
+    "fase": "F3_40semanas",
+    "AUC_test": 0.7496,
+    "Sens_test": 0.5271,
+    "Spec_test": 0.8191,
+    "n_test": 5951,
+    "n_pos_test": 700
+  },
+  {
+    "outcome": "Bajo_peso",
+    "fase": "F4_3meses",
+    "AUC_test": 0.8617,
+    "Sens_test": 0.6729,
+    "Spec_test": 0.857,
+    "n_test": 5951,
+    "n_pos_test": 700
+  },
+  {
+    "outcome": "Bajo_peso",
+    "fase": "F5_6meses",
+    "AUC_test": 0.9283,
+    "Sens_test": 0.76,
+    "Spec_test": 0.9095,
+    "n_test": 5951,
+    "n_pos_test": 700
+  },
+  {
+    "outcome": "Bajo_peso",
+    "fase": "F6_9meses",
+    "AUC_test": 0.9586,
+    "Sens_test": 0.8343,
+    "Spec_test": 0.9392,
+    "n_test": 5951,
+    "n_pos_test": 700
+  },
+  {
+    "outcome": "Wasting",
+    "fase": "F0_Prenatal_Parto",
+    "AUC_test": 0.5428,
+    "Sens_test": 0.1509,
+    "Spec_test": 0.8836,
+    "n_test": 5950,
+    "n_pos_test": 265
+  },
+  {
+    "outcome": "Wasting",
+    "fase": "F1_Nacimiento",
+    "AUC_test": 0.6842,
+    "Sens_test": 0.3698,
+    "Spec_test": 0.8718,
+    "n_test": 5950,
+    "n_pos_test": 265
+  },
+  {
+    "outcome": "Wasting",
+    "fase": "F2_Hospitalizacion",
+    "AUC_test": 0.6908,
+    "Sens_test": 0.3396,
+    "Spec_test": 0.8788,
+    "n_test": 5950,
+    "n_pos_test": 265
+  },
+  {
+    "outcome": "Wasting",
+    "fase": "F3_40semanas",
+    "AUC_test": 0.7123,
+    "Sens_test": 0.3396,
+    "Spec_test": 0.9015,
+    "n_test": 5950,
+    "n_pos_test": 265
+  },
+  {
+    "outcome": "Wasting",
+    "fase": "F4_3meses",
+    "AUC_test": 0.8124,
+    "Sens_test": 0.4868,
+    "Spec_test": 0.8967,
+    "n_test": 5950,
+    "n_pos_test": 265
+  },
+  {
+    "outcome": "Wasting",
+    "fase": "F5_6meses",
+    "AUC_test": 0.8931,
+    "Sens_test": 0.6302,
+    "Spec_test": 0.9214,
+    "n_test": 5950,
+    "n_pos_test": 265
+  },
+  {
+    "outcome": "Wasting",
+    "fase": "F6_9meses",
+    "AUC_test": 0.911,
+    "Sens_test": 0.7019,
+    "Spec_test": 0.9411,
+    "n_test": 5950,
+    "n_pos_test": 265
+  }
+]
