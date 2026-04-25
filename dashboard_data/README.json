@@ -1,0 +1,91 @@
+{
+  "proyecto": "Predicción de Malnutrición a 12 meses EC — PMCI Fundación Canguro",
+  "generado": "2026-04-19 02:46",
+  "split": "80% train / 20% test  (aleatorio estratificado, random_state=42)",
+  "como_leer_csv": "pd.read_csv('dashboard_data/nombre_archivo.csv')",
+  "fases": {
+    "F0_Prenatal_Parto": "Variables prenatales y del parto (41 features)",
+    "F1_Nacimiento": "+ datos del nacimiento (75 features)",
+    "F2_Hospitalizacion": "+ datos de hospitalización (107 features)",
+    "F3_40semanas": "+ visita 40 semanas EC (137 features)",
+    "F4_3meses": "+ visita 3 meses EC (164 features)",
+    "F5_6meses": "+ visita 6 meses EC (183 features)",
+    "F6_9meses": "+ visita 9 meses EC (198 features)"
+  },
+  "outcomes": {
+    "Stunting": "Retraso en crecimiento — HAZ < -2 DS",
+    "Bajo_peso": "Bajo peso para la edad — WAZ < -2 DS",
+    "Wasting": "Desnutrición aguda — WHZ < -2 DS"
+  },
+  "grupos_nutricionales": {
+    "0": "Normal — ningún indicador < -2 DS",
+    "1": "Sobrepeso/Obesidad — sin desnutrición",
+    "2": "Un déficit — exactamente 1 de HAZ/WAZ/WHZ < -2 DS",
+    "3": "Desnutrición múltiple — 2 o 3 indicadores < -2 DS"
+  },
+  "archivos": {
+    "test_predictions.csv": {
+      "descripcion": "Predicciones del modelo sobre el 20% de test. Una fila por paciente.",
+      "columnas_clave": {
+        "real_Stunting": "Outcome real Stunting (0/1, puede ser NaN)",
+        "real_Bajo_peso": "Outcome real Bajo peso (0/1, puede ser NaN)",
+        "real_Wasting": "Outcome real Wasting (0/1, puede ser NaN)",
+        "real_estado_nutricional": "Grupo nutricional real (0-3, puede ser NaN)",
+        "prob_Stunting_F0_*": "Probabilidad de Stunting en cada fase (0.0 a 1.0)",
+        "prob_Bajo_peso_F0_*": "Probabilidad de Bajo peso en cada fase",
+        "prob_Wasting_F0_*": "Probabilidad de Wasting en cada fase",
+        "ERN_Peso": "Peso al nacer (gramos)",
+        "ERN_Talla": "Talla al nacer (cm)",
+        "ERN_EdadGestacional": "Edad gestacional al nacer (semanas)",
+        "CP_TallaMadre": "Talla de la madre (cm)",
+        "Iden_Sede": "Sede de atención",
+        "cohort": "Cohorte temporal (P4/P5/P6)"
+      },
+      "nota": "Para cascada de riesgo individual: usar columnas prob_*_F0 hasta prob_*_F6"
+    },
+    "metricas_por_fase.csv": {
+      "descripcion": "AUC, Sensibilidad y Especificidad en test por fase y outcome.",
+      "columnas": [
+        "outcome",
+        "fase",
+        "AUC_test",
+        "Sens_test",
+        "Spec_test",
+        "n_test",
+        "n_pos_test"
+      ]
+    },
+    "shap_importancia_global.csv": {
+      "descripcion": "Ranking de importancia de features (Stunting, F2_Hospitalizacion).",
+      "columnas": {
+        "feature": "Nombre de la variable clínica",
+        "mean_abs_shap": "Importancia media — mayor = más influyente"
+      },
+      "nota": "Ordenado de mayor a menor. Usar para ranking de factores de riesgo."
+    },
+    "shap_values.csv": {
+      "descripcion": "Valores SHAP individuales por paciente (muestra 1500 del test set).",
+      "columnas": "paciente_idx + una columna por feature",
+      "interpretacion": "SHAP > 0 aumenta riesgo, SHAP < 0 lo disminuye",
+      "nota": "Filtrar por paciente_idx y ordenar por |valor| para explicación individual."
+    },
+    "cohort_stats.csv": {
+      "descripcion": "Prevalencias de malnutrición por cohorte temporal.",
+      "columnas": [
+        "cohort",
+        "n_total",
+        "prev_Stunting",
+        "prev_Bajo_peso",
+        "prev_Wasting"
+      ]
+    }
+  },
+  "modelos": {
+    "directorio": "modelos_pmci/",
+    "formato": "LightGBM nativo (.lgb)",
+    "como_cargar": "lgb.Booster(model_file='modelos_pmci/modelo_Stunting_F2_Hospitalizacion.lgb')",
+    "features": "Cargar modelos_pmci/features_{fase}.json antes de predecir",
+    "total": 21,
+    "convencion": "modelo_{outcome}_{fase}.lgb"
+  }
+}
