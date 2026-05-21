@@ -1,0 +1,285 @@
+{
+  "fecha": "2026-05-14 04:20",
+  "modelos": [
+    {
+      "outcome": "Stunting",
+      "fase": "F0_Prenatal_Parto",
+      "n_samples": 30953,
+      "n_pos": 5337,
+      "auc_cv": 0.6235,
+      "n_rounds": 50,
+      "model_file": "modelos_pmci/modelo_Stunting_F0_Prenatal_Parto.lgb",
+      "feat_file": "modelos_pmci/features_F0_Prenatal_Parto.json"
+    },
+    {
+      "outcome": "Stunting",
+      "fase": "F1_Nacimiento",
+      "n_samples": 30953,
+      "n_pos": 5337,
+      "auc_cv": 0.7475,
+      "n_rounds": 84,
+      "model_file": "modelos_pmci/modelo_Stunting_F1_Nacimiento.lgb",
+      "feat_file": "modelos_pmci/features_F1_Nacimiento.json"
+    },
+    {
+      "outcome": "Stunting",
+      "fase": "F2_Hospitalizacion",
+      "n_samples": 30953,
+      "n_pos": 5337,
+      "auc_cv": 0.7506,
+      "n_rounds": 86,
+      "model_file": "modelos_pmci/modelo_Stunting_F2_Hospitalizacion.lgb",
+      "feat_file": "modelos_pmci/features_F2_Hospitalizacion.json"
+    },
+    {
+      "outcome": "Stunting",
+      "fase": "F3_40semanas",
+      "n_samples": 30953,
+      "n_pos": 5337,
+      "auc_cv": 0.7748,
+      "n_rounds": 125,
+      "model_file": "modelos_pmci/modelo_Stunting_F3_40semanas.lgb",
+      "feat_file": "modelos_pmci/features_F3_40semanas.json"
+    },
+    {
+      "outcome": "Stunting",
+      "fase": "F4_3meses",
+      "n_samples": 30953,
+      "n_pos": 5337,
+      "auc_cv": 0.8239,
+      "n_rounds": 123,
+      "model_file": "modelos_pmci/modelo_Stunting_F4_3meses.lgb",
+      "feat_file": "modelos_pmci/features_F4_3meses.json"
+    },
+    {
+      "outcome": "Stunting",
+      "fase": "F5_6meses",
+      "n_samples": 30953,
+      "n_pos": 5337,
+      "auc_cv": 0.8927,
+      "n_rounds": 73,
+      "model_file": "modelos_pmci/modelo_Stunting_F5_6meses.lgb",
+      "feat_file": "modelos_pmci/features_F5_6meses.json"
+    },
+    {
+      "outcome": "Stunting",
+      "fase": "F6_9meses",
+      "n_samples": 30953,
+      "n_pos": 5337,
+      "auc_cv": 0.9288,
+      "n_rounds": 87,
+      "model_file": "modelos_pmci/modelo_Stunting_F6_9meses.lgb",
+      "feat_file": "modelos_pmci/features_F6_9meses.json"
+    },
+    {
+      "outcome": "Bajo_peso",
+      "fase": "F0_Prenatal_Parto",
+      "n_samples": 29897,
+      "n_pos": 3239,
+      "auc_cv": 0.6183,
+      "n_rounds": 57,
+      "model_file": "modelos_pmci/modelo_Bajo_peso_F0_Prenatal_Parto.lgb",
+      "feat_file": "modelos_pmci/features_F0_Prenatal_Parto.json"
+    },
+    {
+      "outcome": "Bajo_peso",
+      "fase": "F1_Nacimiento",
+      "n_samples": 29897,
+      "n_pos": 3239,
+      "auc_cv": 0.7518,
+      "n_rounds": 79,
+      "model_file": "modelos_pmci/modelo_Bajo_peso_F1_Nacimiento.lgb",
+      "feat_file": "modelos_pmci/features_F1_Nacimiento.json"
+    },
+    {
+      "outcome": "Bajo_peso",
+      "fase": "F2_Hospitalizacion",
+      "n_samples": 29897,
+      "n_pos": 3239,
+      "auc_cv": 0.7576,
+      "n_rounds": 85,
+      "model_file": "modelos_pmci/modelo_Bajo_peso_F2_Hospitalizacion.lgb",
+      "feat_file": "modelos_pmci/features_F2_Hospitalizacion.json"
+    },
+    {
+      "outcome": "Bajo_peso",
+      "fase": "F3_40semanas",
+      "n_samples": 29897,
+      "n_pos": 3239,
+      "auc_cv": 0.7734,
+      "n_rounds": 114,
+      "model_file": "modelos_pmci/modelo_Bajo_peso_F3_40semanas.lgb",
+      "feat_file": "modelos_pmci/features_F3_40semanas.json"
+    },
+    {
+      "outcome": "Bajo_peso",
+      "fase": "F4_3meses",
+      "n_samples": 29897,
+      "n_pos": 3239,
+      "auc_cv": 0.8743,
+      "n_rounds": 130,
+      "model_file": "modelos_pmci/modelo_Bajo_peso_F4_3meses.lgb",
+      "feat_file": "modelos_pmci/features_F4_3meses.json"
+    },
+    {
+      "outcome": "Bajo_peso",
+      "fase": "F5_6meses",
+      "n_samples": 29897,
+      "n_pos": 3239,
+      "auc_cv": 0.9366,
+      "n_rounds": 116,
+      "model_file": "modelos_pmci/modelo_Bajo_peso_F5_6meses.lgb",
+      "feat_file": "modelos_pmci/features_F5_6meses.json"
+    },
+    {
+      "outcome": "Bajo_peso",
+      "fase": "F6_9meses",
+      "n_samples": 29897,
+      "n_pos": 3239,
+      "auc_cv": 0.964,
+      "n_rounds": 51,
+      "model_file": "modelos_pmci/modelo_Bajo_peso_F6_9meses.lgb",
+      "feat_file": "modelos_pmci/features_F6_9meses.json"
+    },
+    {
+      "outcome": "Wasting",
+      "fase": "F0_Prenatal_Parto",
+      "n_samples": 29828,
+      "n_pos": 1232,
+      "auc_cv": 0.555,
+      "n_rounds": 55,
+      "model_file": "modelos_pmci/modelo_Wasting_F0_Prenatal_Parto.lgb",
+      "feat_file": "modelos_pmci/features_F0_Prenatal_Parto.json"
+    },
+    {
+      "outcome": "Wasting",
+      "fase": "F1_Nacimiento",
+      "n_samples": 29828,
+      "n_pos": 1232,
+      "auc_cv": 0.6995,
+      "n_rounds": 54,
+      "model_file": "modelos_pmci/modelo_Wasting_F1_Nacimiento.lgb",
+      "feat_file": "modelos_pmci/features_F1_Nacimiento.json"
+    },
+    {
+      "outcome": "Wasting",
+      "fase": "F2_Hospitalizacion",
+      "n_samples": 29828,
+      "n_pos": 1232,
+      "auc_cv": 0.71,
+      "n_rounds": 50,
+      "model_file": "modelos_pmci/modelo_Wasting_F2_Hospitalizacion.lgb",
+      "feat_file": "modelos_pmci/features_F2_Hospitalizacion.json"
+    },
+    {
+      "outcome": "Wasting",
+      "fase": "F3_40semanas",
+      "n_samples": 29828,
+      "n_pos": 1232,
+      "auc_cv": 0.731,
+      "n_rounds": 55,
+      "model_file": "modelos_pmci/modelo_Wasting_F3_40semanas.lgb",
+      "feat_file": "modelos_pmci/features_F3_40semanas.json"
+    },
+    {
+      "outcome": "Wasting",
+      "fase": "F4_3meses",
+      "n_samples": 29828,
+      "n_pos": 1232,
+      "auc_cv": 0.8219,
+      "n_rounds": 74,
+      "model_file": "modelos_pmci/modelo_Wasting_F4_3meses.lgb",
+      "feat_file": "modelos_pmci/features_F4_3meses.json"
+    },
+    {
+      "outcome": "Wasting",
+      "fase": "F5_6meses",
+      "n_samples": 29828,
+      "n_pos": 1232,
+      "auc_cv": 0.8942,
+      "n_rounds": 71,
+      "model_file": "modelos_pmci/modelo_Wasting_F5_6meses.lgb",
+      "feat_file": "modelos_pmci/features_F5_6meses.json"
+    },
+    {
+      "outcome": "Wasting",
+      "fase": "F6_9meses",
+      "n_samples": 29828,
+      "n_pos": 1232,
+      "auc_cv": 0.9261,
+      "n_rounds": 67,
+      "model_file": "modelos_pmci/modelo_Wasting_F6_9meses.lgb",
+      "feat_file": "modelos_pmci/features_F6_9meses.json"
+    },
+    {
+      "outcome": "Mixta",
+      "fase": "F0_Prenatal_Parto",
+      "n_samples": 29828,
+      "n_pos": 326,
+      "auc_cv": 0.546,
+      "n_rounds": 50,
+      "model_file": "modelos_pmci/modelo_Mixta_F0_Prenatal_Parto.lgb",
+      "feat_file": "modelos_pmci/features_F0_Prenatal_Parto.json"
+    },
+    {
+      "outcome": "Mixta",
+      "fase": "F1_Nacimiento",
+      "n_samples": 29828,
+      "n_pos": 326,
+      "auc_cv": 0.7238,
+      "n_rounds": 50,
+      "model_file": "modelos_pmci/modelo_Mixta_F1_Nacimiento.lgb",
+      "feat_file": "modelos_pmci/features_F1_Nacimiento.json"
+    },
+    {
+      "outcome": "Mixta",
+      "fase": "F2_Hospitalizacion",
+      "n_samples": 29828,
+      "n_pos": 326,
+      "auc_cv": 0.7463,
+      "n_rounds": 50,
+      "model_file": "modelos_pmci/modelo_Mixta_F2_Hospitalizacion.lgb",
+      "feat_file": "modelos_pmci/features_F2_Hospitalizacion.json"
+    },
+    {
+      "outcome": "Mixta",
+      "fase": "F3_40semanas",
+      "n_samples": 29828,
+      "n_pos": 326,
+      "auc_cv": 0.7638,
+      "n_rounds": 50,
+      "model_file": "modelos_pmci/modelo_Mixta_F3_40semanas.lgb",
+      "feat_file": "modelos_pmci/features_F3_40semanas.json"
+    },
+    {
+      "outcome": "Mixta",
+      "fase": "F4_3meses",
+      "n_samples": 29828,
+      "n_pos": 326,
+      "auc_cv": 0.8656,
+      "n_rounds": 57,
+      "model_file": "modelos_pmci/modelo_Mixta_F4_3meses.lgb",
+      "feat_file": "modelos_pmci/features_F4_3meses.json"
+    },
+    {
+      "outcome": "Mixta",
+      "fase": "F5_6meses",
+      "n_samples": 29828,
+      "n_pos": 326,
+      "auc_cv": 0.9357,
+      "n_rounds": 54,
+      "model_file": "modelos_pmci/modelo_Mixta_F5_6meses.lgb",
+      "feat_file": "modelos_pmci/features_F5_6meses.json"
+    },
+    {
+      "outcome": "Mixta",
+      "fase": "F6_9meses",
+      "n_samples": 29828,
+      "n_pos": 326,
+      "auc_cv": 0.9654,
+      "n_rounds": 50,
+      "model_file": "modelos_pmci/modelo_Mixta_F6_9meses.lgb",
+      "feat_file": "modelos_pmci/features_F6_9meses.json"
+    }
+  ]
+}
