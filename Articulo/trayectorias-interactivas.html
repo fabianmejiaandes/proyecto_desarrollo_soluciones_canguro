@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trayectorias interactivas de riesgo nutricional</title>
+  <link rel="stylesheet" href="distill-local.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .trajectory-page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 56px 28px 88px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      margin-bottom: 30px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--fg-link);
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+    }
+
+    .trajectory-header {
+      max-width: 780px;
+      margin-bottom: 34px;
+    }
+
+    .trajectory-header .article-subtitle {
+      max-width: 38em;
+    }
+
+    .trajectory-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .explorer-panel {
+      border: 1px solid var(--line-hairline);
+      border-radius: 8px;
+      background: var(--bg-figure);
+      padding: 20px;
+    }
+
+    .filter-groups {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .filter-group {
+      border: 1px solid var(--line-hairline);
+      border-radius: 8px;
+      background: var(--bg-figure);
+      padding: 14px 16px 16px;
+      margin: 0;
+    }
+
+    .filter-group-title {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--fg-muted);
+      padding: 0 4px;
+      font-weight: 600;
+    }
+
+    .filter-group-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .filter-group-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .filter-group-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .filter-group-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .control-field {
+      min-width: 0;
+    }
+
+    .control-field label {
+      display: block;
+      margin-bottom: 6px;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--fg-muted);
+    }
+
+    .control-field select,
+    .control-field input {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid var(--line-hairline);
+      border-radius: 6px;
+      background: #fff;
+      padding: 9px 10px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--fg-1);
+    }
+
+    /* ── Calculate bar ── */
+    .calculate-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      padding: 12px 16px;
+      border: 2px dashed var(--line-hairline);
+      border-radius: 8px;
+      background: var(--bg-figure);
+      transition: border-color 0.3s;
+    }
+
+    .calculate-bar.is-dirty {
+      border-color: var(--acc-blue, #3E6FB5);
+      background: rgba(62, 111, 181, 0.04);
+    }
+
+    .calculate-button {
+      padding: 10px 28px;
+      border: none;
+      border-radius: 6px;
+      background: #d2d2cf;
+      color: #888;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: not-allowed;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+
+    .calculate-button.is-active {
+      background: var(--acc-blue, #3E6FB5);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(62, 111, 181, 0.3);
+      animation: pulse-calc 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse-calc {
+      0%, 100% { box-shadow: 0 2px 8px rgba(62, 111, 181, 0.25); }
+      50% { box-shadow: 0 2px 18px rgba(62, 111, 181, 0.5); }
+    }
+
+    .calculate-hint {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      color: var(--fg-muted);
+      line-height: 1.4;
+    }
+
+    /* ── Results area (stale when dirty) ── */
+    .results-area {
+      transition: opacity 0.3s;
+    }
+
+    .results-area.is-stale {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    /* ── Patient selection ── */
+    .patient-selection {
+      margin-bottom: 14px;
+    }
+
+    .patient-selection-intro {
+      margin: 0 0 10px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      color: var(--fg-muted);
+      line-height: 1.45;
+    }
+
+    .patient-search {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+    }
+
+    .small-button,
+    .example-button {
+      border: 1px solid var(--line-hairline);
+      border-radius: 6px;
+      background: #fff;
+      padding: 9px 12px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--fg-1);
+      cursor: pointer;
+    }
+
+    .small-button:hover,
+    .example-button:hover {
+      border-color: var(--line-strong);
+      background: #fcfcf8;
+    }
+
+    .example-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 20px;
+    }
+
+    /* ── Chart ── */
+    .chart-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .chart-controls label {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--fg-muted);
+      white-space: nowrap;
+    }
+
+    .chart-controls select {
+      border: 1px solid var(--line-hairline);
+      border-radius: 6px;
+      background: #fff;
+      padding: 7px 10px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      color: var(--fg-1);
+    }
+
+    .chart-wrap {
+      background: #fff;
+      border: 1px solid var(--line-hairline);
+      border-radius: 8px;
+      padding: 10px 10px 2px;
+      overflow-x: auto;
+    }
+
+    .trajectory-chart {
+      display: block;
+      width: 100%;
+      min-width: 640px;
+      height: auto;
+    }
+
+    .chart-line-ok {
+      fill: none;
+      stroke: #3F8A5C;
+      stroke-width: 1.4;
+      opacity: 0.2;
+    }
+
+    .chart-line-nook {
+      fill: none;
+      stroke: #D85B47;
+      stroke-width: 1.4;
+      opacity: 0.25;
+    }
+
+    .chart-line-similar {
+      fill: none;
+      stroke: #5f6c7a;
+      stroke-width: 1.1;
+      opacity: 0.12;
+    }
+
+    .chart-line-cluster {
+      fill: none;
+      stroke-width: 2;
+      stroke-dasharray: 5 5;
+      opacity: 0.42;
+    }
+
+    .chart-line-selected {
+      fill: none;
+      stroke: #a1276f;
+      stroke-width: 3.2;
+    }
+
+    .chart-axis,
+    .chart-grid {
+      stroke: #d9d9d6;
+      stroke-width: 1;
+    }
+
+    .chart-grid {
+      stroke-dasharray: 3 5;
+    }
+
+    .chart-label {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      fill: var(--fg-muted);
+    }
+
+    .chart-point {
+      fill: #fff;
+      stroke: #a1276f;
+      stroke-width: 2;
+    }
+
+    .legend-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 14px 2px 0;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      color: var(--fg-muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .legend-swatch {
+      width: 22px;
+      height: 2px;
+      background: #a1276f;
+    }
+
+    .legend-swatch.ok {
+      background: rgba(63, 138, 92, 0.55);
+    }
+
+    .legend-swatch.nook {
+      background: rgba(216, 91, 71, 0.6);
+    }
+
+    .legend-swatch.cluster {
+      border-top: 2px dashed #3e6fb5;
+      background: transparent;
+    }
+
+    .legend-swatch.threshold {
+      border-top: 2px dashed #D85B47;
+      background: transparent;
+    }
+
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 16px 0 18px;
+    }
+
+    .mini-stat {
+      border: 1px solid var(--line-hairline);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+    }
+
+    .mini-stat span {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      color: var(--fg-muted);
+      margin-bottom: 4px;
+    }
+
+    .mini-stat strong {
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--fg-1);
+    }
+
+    .side-panel {
+      display: grid;
+      gap: 16px;
+    }
+
+    .side-card {
+      border: 1px solid var(--line-hairline);
+      border-radius: 8px;
+      background: #fff;
+      padding: 17px 18px;
+    }
+
+    .side-card h2,
+    .side-card h3 {
+      margin: 0 0 9px;
+      font-size: 20px;
+    }
+
+    .side-card p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.48;
+      color: var(--fg-2);
+    }
+
+    .patient-fields {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .field-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border-top: 1px solid var(--line-hairline);
+      padding-top: 9px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      color: var(--fg-muted);
+    }
+
+    .field-row strong {
+      color: var(--fg-1);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .cluster-grid,
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .cluster-card,
+    .method-card {
+      border: 1px solid var(--line-hairline);
+      border-radius: 8px;
+      background: #fff;
+      padding: 15px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .cluster-card.is-current {
+      border-color: #a1276f;
+      box-shadow: 0 0 0 2px rgba(161, 39, 111, 0.15);
+    }
+
+    .cluster-card h3,
+    .method-card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .cluster-meta {
+      margin: 0 0 10px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      color: var(--fg-muted);
+    }
+
+    .sparkline {
+      width: 100%;
+      height: 58px;
+      display: block;
+    }
+
+    .table-section {
+      margin-top: 26px;
+    }
+
+    .responsive-table {
+      overflow-x: auto;
+    }
+
+    .responsive-table table {
+      margin: 0;
+      width: 100%;
+    }
+
+    .responsive-table th {
+      font-size: 12px;
+      color: var(--fg-muted);
+      white-space: nowrap;
+    }
+
+    .responsive-table td {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    .responsive-table tr[data-selectable="true"] {
+      cursor: pointer;
+    }
+
+    .responsive-table tr[data-selectable="true"]:hover {
+      background: #fcfcf8;
+    }
+
+    .note-text {
+      margin-top: 12px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      color: var(--fg-muted);
+      line-height: 1.45;
+    }
+
+    @media (max-width: 1050px) {
+      .trajectory-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side-panel {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 820px) {
+      .filter-group-grid--2,
+      .filter-group-grid--3,
+      .filter-group-grid--4,
+      .stat-strip,
+      .cluster-grid,
+      .method-grid,
+      .side-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .calculate-bar {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="trajectory-page">
+    <a class="back-link" href="index.html">Volver al artículo</a>
+
+    <header class="trajectory-header">
+      <p class="eyebrow">Explorador complementario</p>
+      <h1 class="article-title">Trayectorias interactivas por fase clínica</h1>
+      <p class="article-subtitle">
+        Seleccione un desenlace y un conjunto de filtros, presione <strong>Calcular</strong> y luego
+        explore la trayectoria de un paciente de referencia frente a sujetos inicialmente parecidos.
+      </p>
+      <p class="abstract">
+        La pregunta no es solo si un paciente termina con el desenlace a 12 meses, sino cuándo empieza a
+        separarse su trayectoria de otros pacientes inicialmente parecidos.
+      </p>
+    </header>
+
+    <section class="trajectory-layout">
+      <div class="explorer-panel">
+        <div class="filter-groups" aria-label="Controles del explorador">
+          <fieldset class="filter-group">
+            <legend class="filter-group-title">Modelo y desenlace</legend>
+            <div class="filter-group-grid filter-group-grid--3">
+              <div class="control-field">
+                <label for="outcome-select">Desenlace</label>
+                <select id="outcome-select"></select>
+              </div>
+              <div class="control-field">
+                <label for="phase-select">Parecidos hasta</label>
+                <select id="phase-select"></select>
+              </div>
+              <div class="control-field">
+                <label for="target-select">Resultado a 12 meses</label>
+                <select id="target-select">
+                  <option value="all">Todos con resultado</option>
+                  <option value="ok">OK (sin desenlace a 12m)</option>
+                  <option value="not-ok">No OK (con desenlace a 12m)</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="filter-group">
+            <legend class="filter-group-title">Filtros clínicos</legend>
+            <div class="filter-group-grid filter-group-grid--3">
+              <div class="control-field">
+                <label for="eg-group-select">Edad gestacional</label>
+                <select id="eg-group-select">
+                  <option value="all">Todas las EG</option>
+                  <option value="lt32">&lt;32 semanas</option>
+                  <option value="32-34">32&ndash;34 semanas</option>
+                  <option value="35-37">35&ndash;37 semanas</option>
+                  <option value="gt37">&gt;37 semanas</option>
+                </select>
+              </div>
+              <div class="control-field">
+                <label for="rciu-select">RCIU</label>
+                <select id="rciu-select">
+                  <option value="all">Todos</option>
+                  <option value="con">Con RCIU</option>
+                  <option value="sin">Sin RCIU</option>
+                </select>
+              </div>
+              <div class="control-field">
+                <label for="site-select">Programa Canguro</label>
+                <select id="site-select"></select>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="filter-group">
+            <legend class="filter-group-title">Ventana temporal (año de nacimiento)</legend>
+            <div class="filter-group-grid filter-group-grid--2">
+              <div class="control-field">
+                <label for="year-from">Desde</label>
+                <input id="year-from" type="number" min="1993" max="2023" value="1993" step="1">
+              </div>
+              <div class="control-field">
+                <label for="year-to">Hasta</label>
+                <input id="year-to" type="number" min="1993" max="2023" value="2023" step="1">
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="filter-group">
+            <legend class="filter-group-title">Umbrales de parecido</legend>
+            <div class="filter-group-grid filter-group-grid--2">
+              <div class="control-field">
+                <label for="eg-tolerance">EG +/- semanas</label>
+                <input id="eg-tolerance" type="number" min="0" step="0.5" value="1">
+              </div>
+              <div class="control-field">
+                <label for="z-tolerance">Z-score +/-</label>
+                <input id="z-tolerance" type="number" min="0" step="0.05" value="0.2">
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <!-- ── Botón Calcular ── -->
+        <div id="calculate-bar" class="calculate-bar">
+          <button id="calculate-btn" class="calculate-button" type="button" disabled>Calcular trayectorias</button>
+          <span id="calculate-hint" class="calculate-hint">Los filtros están listos. Presione <strong>Calcular</strong> cada vez que cambie una condición.</span>
+        </div>
+
+        <!-- ── Selección de paciente ── -->
+        <div class="patient-selection">
+          <p class="patient-selection-intro">
+            <strong>Selección de paciente:</strong> haga clic en cualquier trayectoria de la gráfica para
+            seleccionarla como referencia (línea magenta). También puede buscar por ID o usar los ejemplos.
+          </p>
+          <div class="control-field">
+            <label for="patient-search">Buscar por ID</label>
+            <div class="patient-search">
+              <input id="patient-search" inputmode="numeric" placeholder="ID anonimizado del paciente">
+              <button id="patient-search-button" class="small-button" type="button">Buscar</button>
+            </div>
+          </div>
+          <div id="example-row" class="example-row" aria-label="Pacientes sugeridos"></div>
+        </div>
+
+        <!-- ── Resultados (se atenúan al cambiar filtros) ── -->
+        <div id="results-area" class="results-area">
+          <div id="stat-strip" class="stat-strip"></div>
+
+          <div class="chart-controls">
+            <label for="chart-mode">Gráfica</label>
+            <select id="chart-mode">
+              <option value="probability">Probabilidad de riesgo estimada</option>
+            </select>
+          </div>
+
+          <figure class="figure">
+            <div class="chart-wrap">
+              <svg id="trajectory-chart" class="trajectory-chart" viewBox="0 0 760 420" role="img" aria-label="Curvas de probabilidad por fase"></svg>
+            </div>
+            <figcaption>
+              La línea magenta muestra el paciente seleccionado. Las líneas <span style="color:#3F8A5C;font-weight:600">verdes</span>
+              son sujetos parecidos que terminaron OK; las <span style="color:#D85B47;font-weight:600">rojas</span>, los que
+              terminaron No OK. Las líneas punteadas resumen los perfiles medios de cada cluster.
+            </figcaption>
+          </figure>
+
+          <div id="legend-row" class="legend-row" aria-label="Leyenda">
+            <span class="legend-item"><span class="legend-swatch"></span>Paciente seleccionado</span>
+            <span class="legend-item"><span class="legend-swatch ok"></span>Parecidos OK</span>
+            <span class="legend-item"><span class="legend-swatch nook"></span>Parecidos No OK</span>
+            <span class="legend-item"><span class="legend-swatch cluster"></span>Media de cluster</span>
+          </div>
+          <p class="note-text">
+            Para mantener fluida la interacción, esta página usa una muestra determinística amplia del
+            artefacto de pacientes; los perfiles de cluster y los conteos globales provienen del conjunto
+            completo generado por el notebook.
+          </p>
+
+          <section class="table-section">
+            <h2>Clases de equivalencia progresivas</h2>
+            <p>
+              Para cada fase, agrupamos pacientes parecidos al sujeto de referencia usando solo la información
+              disponible hasta ese momento. Así podemos ver si el grupo inicialmente comparable termina
+              concentrando más casos No OK a los 12 meses.
+            </p>
+            <div id="equivalence-table" class="responsive-table figure-card"></div>
+          </section>
+
+          <section class="table-section">
+            <h2>Sujetos más cercanos dentro de la selección</h2>
+            <p>
+              Esta tabla permite saltar a pacientes con curvas cercanas y revisar si, aun pareciéndose al
+              inicio, terminan en resultados distintos.
+            </p>
+            <div id="neighbor-table" class="responsive-table figure-card"></div>
+          </section>
+        </div>
+      </div>
+
+      <aside class="side-panel">
+        <article class="side-card">
+          <h2>Paciente seleccionado</h2>
+          <p id="selected-summary">Cargando paciente.</p>
+          <div id="selected-fields" class="patient-fields"></div>
+        </article>
+
+        <article class="side-card">
+          <h2>Lectura del clustering</h2>
+          <p id="cluster-reading">
+            Cada cluster agrupa pacientes con trayectorias de probabilidad similares a lo largo de las 7 fases.
+            El cluster resaltado con borde magenta es el del paciente seleccionado. La prevalencia indica
+            qué proporción terminó con el desenlace (No OK) a los 12 meses.
+          </p>
+        </article>
+
+        <article class="side-card">
+          <h2>Ventana temporal activa</h2>
+          <p id="period-reading">
+            El artefacto contiene el año de atención de cada paciente. Ajuste el rango de años en los filtros
+            para restringir la ventana temporal y observar cómo cambian los perfiles según la época.
+          </p>
+        </article>
+      </aside>
+    </section>
+
+    <section class="article-section">
+      <h2>Perfiles de trayectoria por desenlace</h2>
+      <p>
+        Los perfiles vienen de un KMeans sobre las probabilidades F0-F6. Cada cluster describe un patrón
+        de riesgo distinto: alto persistente, descendente, bajo estable, etc. Use estos perfiles como
+        contexto descriptivo: el cluster del paciente seleccionado se resalta con borde magenta para que
+        pueda comparar su trayectoria individual con el perfil medio de su grupo.
+      </p>
+      <div id="cluster-grid" class="cluster-grid"></div>
+    </section>
+
+    <section class="article-section">
+      <h2>¿El clustering actual alcanza para la hipótesis?</h2>
+      <div class="method-grid">
+        <article class="method-card">
+          <h3>Lo que sí cubre</h3>
+          <p>
+            Agrupa trayectorias completas de probabilidad por desenlace y permite ver perfiles como riesgo
+            alto persistente, descendente o bajo persistente.
+          </p>
+        </article>
+        <article class="method-card">
+          <h3>Lo que falta</h3>
+          <p>
+            No impone parecido clínico inicial en edad gestacional ni puntajes Z, y no construye clases
+            progresivas fase por fase con target OK/no OK como criterio de lectura.
+          </p>
+        </article>
+        <article class="method-card">
+          <h3>Uso recomendado aquí</h3>
+          <p>
+            Usar KMeans como contexto descriptivo y esta equivalencia progresiva como herramienta exploratoria;
+            si la hipótesis se sostiene, conviene formalizarla en el notebook.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="data/trajectory-explorer-lite.js"></script>
+  <script src="trayectorias-interactivas.js"></script>
+</body>
+</html>
