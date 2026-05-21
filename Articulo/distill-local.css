@@ -1,0 +1,316 @@
+﻿/* =============================================================
+   Distill Design System â€” colors_and_type.css
+   Reverse-engineered from screenshots of distill.pub articles.
+   ============================================================= */
+
+/* ---- Web fonts (Google Fonts substitutions) ---------------- */
+
+/* KaTeX for math (inline + block). Used by ui_kits and slides. */
+/* @import url("https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"); */
+
+:root {
+  /* ===== Color â€” surfaces ===== */
+  --bg-page:        #FFFFFF;
+  --bg-figure:      #FCFCF8;   /* very faint warm cream â€” figure cards */
+  --bg-figure-warm: #FFFEF6;   /* creamier, used for diagram backgrounds */
+  --bg-code:        #F6F6F2;   /* code block background */
+  --bg-callout:     #F5F1E8;   /* light tan callouts (rare) */
+
+  /* ===== Color â€” text ===== */
+  --fg-1:           #1A1A1A;   /* primary body */
+  --fg-2:           #4A4A4A;   /* secondary body */
+  --fg-muted:       #6E7B91;   /* CAPTIONS â€” distinctive slate-blue grey */
+  --fg-faint:       #A0A8B5;   /* placeholder / disabled */
+  --fg-link:        #4A7BB7;   /* links */
+  --fg-link-hover:  #2E5A95;
+
+  /* ===== Color â€” lines & borders ===== */
+  --line-hairline:  #E6E6E0;
+  --line-rule:      #D9D9D6;   /* used dashed on figure containers */
+  --line-strong:    #B8B8B0;
+  --line-axis:      #4A4A4A;   /* chart axes */
+  --line-grid:      #ECECEA;   /* chart gridlines */
+
+  /* ===== Color â€” accents (figure palette) =====
+     Hand-picked, low-saturation. Used in diagrams, plots, highlights. */
+  --acc-ochre:      #D9A441;
+  --acc-ochre-dk:   #B07A1A;
+  --acc-ochre-lt:   #F1D27A;
+
+  --acc-blue:       #3E6FB5;
+  --acc-blue-lt:    #A8C2E2;
+  --acc-blue-pale:  #D9E5F2;
+
+  --acc-red:        #D85B47;
+  --acc-red-lt:     #F2A89C;
+
+  --acc-green:      #3F8A5C;
+  --acc-green-lt:   #7FB686;
+
+  --acc-magenta:    #A1276F;   /* the "Gold Content" line color */
+  --acc-cyan:       #4FC2E0;   /* feature-viz cyan bars */
+  --acc-purple:     #8B6FB5;
+
+  /* ===== Spacing ===== */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+  --sp-9: 96px;
+
+  /* ===== Radii ===== */
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-pill: 999px;
+  --r-circle: 50%;
+
+  /* ===== Shadows (rare â€” Distill almost never uses elevation) ===== */
+  --shadow-none: none;
+  --shadow-1: 0 1px 0 rgba(0,0,0,0.04);              /* divider-ish */
+  --shadow-2: 0 1px 3px rgba(60,70,90,0.08);         /* tooltip / popover */
+
+  /* ===== Layout ===== */
+  --col-body: 720px;       /* main reading column */
+  --col-wide: 980px;       /* outset figures */
+  --col-full: 1200px;      /* full-bleed figures */
+  --col-sidenote: 240px;   /* right-margin sidenote rail */
+
+  /* ===== Type â€” families ===== */
+  --font-serif: "Crimson Pro", "Crimson Text", "Charter", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --font-sans:  "Source Sans 3", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --font-mono:  "Inconsolata", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-math:  "KaTeX_Main", "Latin Modern Math", "Cambria Math", serif;
+
+  /* ===== Type â€” sizes (article scale) ===== */
+  --fs-h1: 42px;
+  --fs-h2: 28px;
+  --fs-h3: 22px;
+  --fs-h4: 18px;
+  --fs-body: 19px;
+  --fs-small: 15px;
+  --fs-caption: 15px;
+  --fs-tiny: 13px;
+  --fs-mono: 16px;
+
+  /* ===== Type â€” line-heights ===== */
+  --lh-tight: 1.2;
+  --lh-snug:  1.35;
+  --lh-body:  1.6;
+  --lh-loose: 1.75;
+
+  /* ===== Motion ===== */
+  --t-fast: 120ms ease;
+  --t: 180ms ease;
+  --t-slow: 320ms ease;
+}
+
+/* =============================================================
+   Semantic element styles.
+   Drop this file into a page for "instant Distill" defaults.
+   ============================================================= */
+
+html, body {
+  background: var(--bg-page);
+  color: var(--fg-1);
+  font-family: var(--font-serif);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  color: var(--fg-1);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.005em;
+  /* Distill uses sentence case â€” don't text-transform, write it that way */
+}
+h1 { font-size: var(--fs-h1); font-weight: 600; line-height: var(--lh-tight); margin: 0 0 var(--sp-5); }
+h2 { font-size: var(--fs-h2); margin: var(--sp-8) 0 var(--sp-4); }
+h3 { font-size: var(--fs-h3); margin: var(--sp-6) 0 var(--sp-3); }
+h4 { font-size: var(--fs-h4); font-weight: 600; margin: var(--sp-5) 0 var(--sp-2); }
+
+p { margin: 0 0 var(--sp-5); text-wrap: pretty; }
+p + p { margin-top: 0; }
+
+a {
+  color: var(--fg-link);
+  text-decoration: underline;
+  text-decoration-thickness: 0.5px;
+  text-underline-offset: 2px;
+  transition: color var(--t-fast);
+}
+a:hover { color: var(--fg-link-hover); }
+
+strong, b { font-weight: 600; color: var(--fg-1); }
+em, i { font-style: italic; }
+
+/* Inline code */
+code, kbd, samp {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--bg-code);
+  padding: 0.1em 0.35em;
+  border-radius: var(--r-sm);
+  color: #2A2A2A;
+}
+
+/* Block code */
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  background: var(--bg-code);
+  border: 1px solid var(--line-hairline);
+  border-radius: var(--r-md);
+  padding: var(--sp-4) var(--sp-5);
+  overflow-x: auto;
+  line-height: 1.55;
+  margin: var(--sp-5) 0;
+}
+pre code { background: none; padding: 0; border-radius: 0; font-size: inherit; }
+
+/* Lists */
+ul, ol { padding-left: 1.4em; margin: 0 0 var(--sp-5); }
+li { margin-bottom: var(--sp-2); }
+li::marker { color: var(--fg-muted); }
+
+/* Blockquote (rare in Distill â€” used for pull-quotes / examples) */
+blockquote {
+  margin: var(--sp-5) 0;
+  padding: 0 0 0 var(--sp-5);
+  border-left: 2px solid var(--line-rule);
+  color: var(--fg-2);
+  font-style: italic;
+}
+
+/* HR */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-hairline);
+  margin: var(--sp-7) 0;
+}
+
+/* Figure & caption â€” the Distill workhorse */
+figure {
+  margin: var(--sp-6) 0;
+}
+figure.outset { margin-left: -120px; margin-right: -120px; }
+figure.full-bleed { margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); }
+
+figcaption,
+.caption {
+  font-family: var(--font-sans);
+  font-size: var(--fs-caption);
+  line-height: 1.5;
+  color: var(--fg-muted);
+  margin-top: var(--sp-3);
+  text-wrap: pretty;
+}
+figcaption strong,
+.caption strong { color: var(--fg-2); font-weight: 600; }
+
+/* Figure container â€” dashed warm border, faint cream bg */
+.figure-card {
+  background: var(--bg-figure);
+  border: 1px dashed var(--line-rule);
+  border-radius: var(--r-md);
+  padding: var(--sp-5);
+}
+.figure-card.solid { border-style: solid; border-color: var(--line-hairline); }
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  margin: var(--sp-5) 0;
+}
+th, td {
+  text-align: left;
+  padding: var(--sp-2) var(--sp-3);
+  border-bottom: 1px solid var(--line-hairline);
+}
+th { font-weight: 600; color: var(--fg-2); border-bottom-color: var(--line-rule); }
+
+/* UI labels â€” chart axes, control labels, button text */
+.ui-label,
+.label {
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  color: var(--fg-2);
+  font-weight: 400;
+}
+.ui-label-strong { font-weight: 600; color: var(--fg-1); }
+
+/* Sidenote (right-margin footnote) */
+.sidenote {
+  font-family: var(--font-sans);
+  font-size: var(--fs-tiny);
+  line-height: 1.4;
+  color: var(--fg-muted);
+}
+.footnote-ref {
+  font-family: var(--font-sans);
+  font-size: 0.7em;
+  vertical-align: super;
+  color: var(--fg-link);
+  text-decoration: none;
+  margin-left: 1px;
+}
+
+/* Buttons (rare) */
+.btn {
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--fg-1);
+  background: var(--bg-page);
+  border: 1px solid var(--line-rule);
+  border-radius: var(--r-sm);
+  padding: var(--sp-2) var(--sp-4);
+  cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+.btn:hover { background: var(--bg-figure); border-color: var(--line-strong); }
+.btn:active { background: var(--bg-code); }
+
+/* The page reading layout */
+.distill-article {
+  max-width: var(--col-body);
+  margin: 0 auto;
+  padding: var(--sp-9) var(--sp-5) var(--sp-9);
+}
+
+/* Slider â€” used in interactives (Convolution kernel, etc) */
+input[type="range"].distill-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: var(--acc-blue-pale);
+  border-radius: var(--r-pill);
+  outline: none;
+}
+input[type="range"].distill-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--acc-blue);
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px var(--acc-blue);
+}
+input[type="range"].distill-slider::-moz-range-thumb {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--acc-blue); cursor: pointer;
+  border: 2px solid #fff; box-shadow: 0 0 0 1px var(--acc-blue);
+}
