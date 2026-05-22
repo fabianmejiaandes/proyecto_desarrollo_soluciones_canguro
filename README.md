@@ -99,7 +99,7 @@ Librerías principales:
 
 El dashboard está desplegado en AWS y disponible en:
 
-**[http://ec2-52-73-108-72.compute-1.amazonaws.com/](http://ec2-52-73-108-72.compute-1.amazonaws.com/)**
+**[https://kmcfundacioncanguro.duckdns.org](https://kmcfundacioncanguro.duckdns.org)**
 
 No se requiere instalación local para usar la aplicación.
 
